@@ -18,7 +18,7 @@ export type StackRoutesProps<T extends keyof StackRoutesList  > = NativeStackScr
 const Stack = createNativeStackNavigator<StackRoutesList>()
 
 
-export function StackRoutes() {
+export function AuthRoutes() {
     return(
         <Stack.Navigator screenOptions={{ headerShown: false }} >
             <Stack.Screen name="signup" component={SignUp} />

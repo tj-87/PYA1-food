@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList, Pressable, Text, View, Image, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 
-import { StackRoutesProps } from "../../routes/stackRoutes";
+import { StackRoutesProps } from "../../routes/authRoutes";
 
 import { ChevronRight } from "lucide-react-native";
 import { useFonts, Sen_700Bold, Sen_400Regular,  } from '@expo-google-fonts/sen';
@@ -41,6 +41,18 @@ const RESTAURANTS = [
   },
   {
     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    imag: require("../../assets/restaurant2.png"), 
+    title: 'Restaurante São José',
+     subTitle: 'Hot dog - Peixes - Bebidas '
+  },
+   {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28a',
+   imag: require("../../assets/restaurant1.png"),
+    title: 'Restaurante Palatus',  
+    subTitle: 'Hot dog - Peixes - Bebidas '
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f3',
     imag: require("../../assets/restaurant2.png"), 
     title: 'Restaurante São José',
      subTitle: 'Hot dog - Peixes - Bebidas '
