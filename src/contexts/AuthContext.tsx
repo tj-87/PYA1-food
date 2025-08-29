@@ -9,16 +9,31 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
        name: "",
   })
 
+  const [ isLoadingUser, setIsLoadingUser ] = useState(true)
+
   function signUp(name: string){
+    try {
+    const newUser = { name }
+    setUser(newUser)
     saveUserName({ name })
+    } catch (error) {
+      throw error
+    }
   }
 
   async function loadUserData() {
-    const userLogged = await getUserName()
-
-    if (userLogged) {
+    try {
+      const userLogged = await getUserName()
+      if (userLogged) {
       setUser(userLogged)
     }
+    } catch (error) {
+      throw error
+    } finally{
+      setIsLoadingUser(false)
+    }
+ 
+   
   }
 
   useEffect(() => {
@@ -28,7 +43,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   return (
     <AuthContext.Provider
-      value={{ user, signUp }}
+      value={{ user, signUp, isLoadingUser }}
     >
       {children}
     </AuthContext.Provider>

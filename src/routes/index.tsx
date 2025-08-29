@@ -4,16 +4,25 @@ import { useAuth } from "../hooks/useAuth/useAuth";
 
 import { AuthRoutes } from "./authRoutes";
 
+import { Home } from "../screens/home"
+import { AppRoutes } from "./appRoutes";
+import { ActivityIndicator, View } from "react-native";
+
 
 export function Routes() {
 
-    const { user } = useAuth()
+    const { user, isLoadingUser } = useAuth()
 
-    console.log("Usuário Logado =>", user  )
-
+    if(isLoadingUser)
     return(
-        <NavigationContainer>
-            <AuthRoutes />
-        </NavigationContainer>
+         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <ActivityIndicator size="large" color="#FF7622" />
+         </View>
+    
+    )
+    return(
+    <NavigationContainer>
+      {user ? <AppRoutes /> : <AuthRoutes />}
+    </NavigationContainer>
     )
 } 
