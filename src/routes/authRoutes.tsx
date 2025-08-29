@@ -6,23 +6,21 @@ import { SignUp } from "../screens/signup"
 
 
 
-export type StackRoutesList ={
+export type AuthRotes ={
     signup: undefined
-    home: {
-        id: string
-    }
+     home: undefined
 }
 
-export type StackRoutesProps<T extends keyof StackRoutesList  > = NativeStackScreenProps<StackRoutesList, T>
+export type AuthRoutesProps<T extends keyof AuthRotes  > = NativeStackScreenProps<AuthRotes, T>
 
-const Stack = createNativeStackNavigator<StackRoutesList>()
+const Stack = createNativeStackNavigator<AuthRotes>()
 
 
 export function AuthRoutes() {
     return(
         <Stack.Navigator screenOptions={{ headerShown: false }} >
             <Stack.Screen name="signup" component={SignUp} />
-            <Stack.Screen name="home" component={Home} />
+              <Stack.Screen name="home" component={Home} />
         </Stack.Navigator>
     )
 }

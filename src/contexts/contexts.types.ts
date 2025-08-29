@@ -8,6 +8,7 @@ export type contextsProps = {
 export type AuthContextDataProps ={
     user: contextsProps
     signUp: (name: string) => void
+    isLoadingUser: boolean
 }
 
 export type AuthContextProviderProps ={

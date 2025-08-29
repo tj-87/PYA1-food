@@ -19,7 +19,6 @@ export async function getUserName() {
 
     const user: userServiceProps = storage ? JSON.parse(storage) : {} as userServiceProps;
 
-    console.log(user);
     return user;
   } catch (error) {
     console.error("Erro ao buscar usuário:", error);
