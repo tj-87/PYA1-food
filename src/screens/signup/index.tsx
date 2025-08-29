@@ -3,12 +3,13 @@ import { useFonts, Sen_700Bold, Sen_400Regular,  } from '@expo-google-fonts/sen'
 
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 
-import { StackRoutesProps } from '../../routes/authRoutes';
+
 import { useAuth } from '../../hooks/useAuth/useAuth';
+import { AuthRoutesProps } from '../../routes/authRoutes';
 
 
 
-export function SignUp({ navigation }: StackRoutesProps<'signup'> ) {
+export function SignUp({ navigation }: AuthRoutesProps<'signup'> ) {
    const [text, setText] = useState('');
 
    const { signUp } = useAuth()
@@ -53,7 +54,7 @@ export function SignUp({ navigation }: StackRoutesProps<'signup'> ) {
        <Pressable disabled={!text}
         onPress={() => {                 
         handledeSignup(text) 
-        navigation.navigate("home", { id: text }) 
+        navigation.navigate("home") 
   }}
         style={{ backgroundColor: text ? '#FF7622' : '#DBDBDB' , height: 54, justifyContent:'center', alignContent:'center', alignItems:'center', borderRadius: 8 }} >
         <Text style={{color: text ? "#ffffff"  : "#98A8B8", fontFamily: 'Sen_400Regular'}}  >Criar</Text>

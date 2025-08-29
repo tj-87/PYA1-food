@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList, Pressable, Text, View, Image, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 
-import { StackRoutesProps } from "../../routes/authRoutes";
+
 
 import { ChevronRight } from "lucide-react-native";
 import { useFonts, Sen_700Bold, Sen_400Regular,  } from '@expo-google-fonts/sen';
@@ -10,6 +10,8 @@ import ImagButton from '../../assets/button.svg'
 import Book from '../../assets/book.svg'
 import Fish from '../../assets/fish.svg'
 import HotDog from '../../assets/hotDog.svg'
+import { AppRoutesProps } from "../../routes/appRoutes";
+import { useAuth } from "../../hooks/useAuth/useAuth";
 
 
 
@@ -61,7 +63,9 @@ const RESTAURANTS = [
 
 
 
-export function Home({ navigation, route }: StackRoutesProps<'home'>) {
+export function Home({ navigation, route }: AppRoutesProps<'home'>) {
+
+    const { user } = useAuth()
 
     let [fontsLoaded] = useFonts({
           Sen_700Bold,
@@ -80,7 +84,7 @@ export function Home({ navigation, route }: StackRoutesProps<'home'>) {
         <View style={{ flexDirection: 'row', marginTop: 54, alignItems:'center' }} >
             <ImagButton width={45} height={45}  />
             <Text  style ={{ marginLeft: 8, fontWeight: 700, fontSize: 12, fontFamily: 'Sen_400Regular', color: '#FC6E2A'   }} >
-                {route.params.id}
+              { user.name }
             </Text>  
         </View> 
         <View style = {{ marginTop: 24,  }} >
