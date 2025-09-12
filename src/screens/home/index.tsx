@@ -1,6 +1,5 @@
-import React from "react";
-import { FlatList, Pressable, Text, View, Image, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
-
+import React, { useCallback, useEffect, useState } from "react";
+import { FlatList, Pressable, Text, View, Image, KeyboardAvoidingView, Platform, ScrollView, Button } from "react-native";
 
 
 import { ChevronRight } from "lucide-react-native";
@@ -12,6 +11,8 @@ import Fish from '../../assets/fish.svg'
 import HotDog from '../../assets/hotDog.svg'
 import { AppRoutesProps } from "../../routes/appRoutes";
 import { useAuth } from "../../hooks/useAuth/useAuth";
+import { getRestaurants } from "../../services/restaurantService/restaurantService";
+import { Restaurant } from "../../services/restaurantService/restaurantService.types";
 
 
 
@@ -34,47 +35,36 @@ const DATA = [
   },
 ];
 
-const RESTAURANTS = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-   imag: require("../../assets/restaurant1.png"),
-    title: 'Restaurante Palatus',  
-    subTitle: 'Hot dog - Peixes - Bebidas '
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    imag: require("../../assets/restaurant2.png"), 
-    title: 'Restaurante São José',
-     subTitle: 'Hot dog - Peixes - Bebidas '
-  },
-   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28a',
-   imag: require("../../assets/restaurant1.png"),
-    title: 'Restaurante Palatus',  
-    subTitle: 'Hot dog - Peixes - Bebidas '
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f3',
-    imag: require("../../assets/restaurant2.png"), 
-    title: 'Restaurante São José',
-     subTitle: 'Hot dog - Peixes - Bebidas '
-  },
-];
-
 
 
 export function Home({ navigation, route }: AppRoutesProps<'home'>) {
 
-    const { user } = useAuth()
+    const { user, logout } = useAuth()
+    const [restaurants, setRestaurants] = useState<Restaurant[]>([])
 
     let [fontsLoaded] = useFonts({
           Sen_700Bold,
           Sen_400Regular
     });
     
+    const loadRestaurants = useCallback(async () => {
+    const restaurants = await getRestaurants()
+    setRestaurants(restaurants)
+    }, []);
+
+
+   useEffect(() => {
+    loadRestaurants()
+   }, [])
     if (!fontsLoaded) {
         return null;
     }
+
+    const handleLogout = () => {
+      logout()
+    }
+
+  
 
     return(
         <KeyboardAvoidingView
@@ -84,7 +74,7 @@ export function Home({ navigation, route }: AppRoutesProps<'home'>) {
         <View style={{ flexDirection: 'row', marginTop: 54, alignItems:'center' }} >
             <ImagButton width={45} height={45}  />
             <Text  style ={{ marginLeft: 8, fontWeight: 700, fontSize: 12, fontFamily: 'Sen_400Regular', color: '#FC6E2A'   }} >
-              { user.name }
+              { user?.name }
             </Text>  
         </View> 
         <View style = {{ marginTop: 24,  }} >
@@ -125,23 +115,30 @@ export function Home({ navigation, route }: AppRoutesProps<'home'>) {
         </View>
    
       <FlatList
-      data={RESTAURANTS}
+      data={restaurants}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <Pressable>
         <View style={{  marginTop: 18,}} >
             <View style={{borderRadius: 15, overflow: "hidden"   }}>
-            <Image source={item.imag } style={{ width: 352, height: 191}} />
+            <Image source={{ uri: item.image }} style={{ width: 352, height: 191}} />
             </View>
-            <Text  style ={{ marginTop: 8, fontWeight: 400, fontSize: 20, fontFamily: 'Sen_400Regular', color: '#181C2E' }}  >{item.title}</Text>
-            <Text  style ={{ marginTop: 5, fontWeight: 400, fontSize: 14, fontFamily: 'Sen_400Regular', color: '#A0A5BA' }}>{item.subTitle}</Text>
+            <Text  style ={{ marginTop: 8, fontWeight: 400, fontSize: 20, fontFamily: 'Sen_400Regular', color: '#181C2E' }}  >{item.name}</Text>
+            <Text  style ={{ marginTop: 5, fontWeight: 400, fontSize: 14, fontFamily: 'Sen_400Regular', color: '#A0A5BA' }}>Hot dog - Peixes - Bebidas</Text>
         </View>
         </Pressable>
       )}
       showsVerticalScrollIndicator={false}
       ListFooterComponent={<View style={{ height: 50 }} />}
     />
-    </View>
+       <View  style={{ marginBottom: 12}} >
+          <Button title={"Sair"}
+          onPress={handleLogout}
+          >
+
+          </Button>
+        </View>
+    </View>         
     </KeyboardAvoidingView>
     )
 }
