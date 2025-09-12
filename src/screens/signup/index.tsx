@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFonts, Sen_700Bold, Sen_400Regular,  } from '@expo-google-fonts/sen';
 
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
@@ -14,8 +14,8 @@ export function SignUp({ navigation }: AuthRoutesProps<'signup'> ) {
 
    const { signUp } = useAuth()
 
-   function handledeSignup(name: string){
-      signUp(name)
+   function handledeSignup(){
+      signUp(text)
    }
 
     let [fontsLoaded] = useFonts({
@@ -26,6 +26,7 @@ export function SignUp({ navigation }: AuthRoutesProps<'signup'> ) {
   if (!fontsLoaded) {
     return null;
   }
+
   return (
      <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -53,7 +54,7 @@ export function SignUp({ navigation }: AuthRoutesProps<'signup'> ) {
         <View style={{ marginTop: 134, marginBottom: 24 }}  >
        <Pressable disabled={!text}
         onPress={() => {                 
-        handledeSignup(text) 
+        handledeSignup() 
         navigation.navigate("home") 
   }}
         style={{ backgroundColor: text ? '#FF7622' : '#DBDBDB' , height: 54, justifyContent:'center', alignContent:'center', alignItems:'center', borderRadius: 8 }} >

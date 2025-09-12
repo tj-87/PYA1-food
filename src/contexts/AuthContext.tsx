@@ -1,11 +1,12 @@
 import { createContext, useEffect, useState } from "react";
-import { AuthContextDataProps, AuthContextProviderProps } from "./contexts.types";
-import { getUserName, saveUserName } from "../services/userService/userService";
+import { AuthContextDataProps, AuthContextProviderProps, contextsProps } from "./contexts.types";
+import { getUserName, logoutUser, saveUserName } from "../services/userService/userService";
+
 
 export const AuthContext = createContext<AuthContextDataProps>({} as AuthContextDataProps);
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
-  const [user, setUser ] = useState({
+  const [user, setUser ] = useState<null|contextsProps>({
        name: "",
   })
 
@@ -31,10 +32,15 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       throw error
     } finally{
       setIsLoadingUser(false)
-    }
- 
-   
+    } 
   }
+
+  async function logout() {
+    setUser(null)
+    logoutUser()
+  }
+
+
 
   useEffect(() => {
     loadUserData()
@@ -43,7 +49,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   return (
     <AuthContext.Provider
-      value={{ user, signUp, isLoadingUser }}
+      value={{ user, signUp, logout, isLoadingUser }}
     >
       {children}
     </AuthContext.Provider>
