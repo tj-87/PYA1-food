@@ -4,7 +4,6 @@ import { useAuth } from "../hooks/useAuth/useAuth";
 
 import { AuthRoutes } from "./authRoutes";
 
-import { Home } from "../screens/home"
 import { AppRoutes } from "./appRoutes";
 import { ActivityIndicator, View } from "react-native";
 

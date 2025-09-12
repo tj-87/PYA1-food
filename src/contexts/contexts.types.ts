@@ -6,9 +6,10 @@ export type contextsProps = {
 }
 
 export type AuthContextDataProps ={
-    user: contextsProps
+    user: contextsProps | null
     signUp: (name: string) => void
     isLoadingUser: boolean
+    logout:() => void
 }
 
 export type AuthContextProviderProps ={
